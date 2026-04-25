@@ -1,0 +1,172 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Smart AI — SMART AI · GLOBAL STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS CUSTOM PROPERTIES ──────────────────────────────────────────────── */
+:root {
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-cond: 'Barlow Condensed', sans-serif;
+  --accent: #9B6DFF;
+  --accent-lt: #c9adff;
+}
+
+/* ─── BASE LAYER ─────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    @apply m-0 p-0 box-border;
+  }
+
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply font-body bg-bg text-white overflow-x-hidden;
+  }
+
+  a {
+    @apply text-inherit;
+  }
+
+  img {
+    @apply max-w-full block;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-[5px];
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-green/20 rounded;
+  }
+}
+
+/* ─── COMPONENT LAYER ────────────────────────────────────────────────────── */
+@layer components {
+  /* Container */
+  .container {
+    @apply w-full max-w-[1100px] mx-auto px-4 sm:px-6;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2
+           px-6 py-3 sm:px-10 sm:py-4 rounded-[10px]
+           bg-green text-bg
+           font-body font-bold text-[0.85rem] sm:text-[0.92rem]
+           tracking-wide border-none cursor-pointer
+           transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+           animate-button-breathe;
+    box-shadow: 0 0 40px rgba(13,255,127,0.2), 0 4px 24px rgba(0,0,0,0.3);
+  }
+  .btn-primary:hover {
+    @apply -translate-y-0.5 scale-[1.02];
+    box-shadow: 0 0 60px rgba(13,255,127,0.4), 0 8px 40px rgba(0,0,0,0.4);
+    animation-play-state: paused;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2
+           px-6 py-3 sm:px-9 sm:py-4 rounded-[10px]
+           bg-white/[0.04] text-muted-lt no-underline
+           font-body font-semibold text-[0.85rem] sm:text-[0.92rem]
+           backdrop-blur-[12px]
+           transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)];
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn-secondary:hover {
+    @apply bg-white/[0.08] text-white -translate-y-0.5;
+    border-color: rgba(13,255,127,0.3);
+  }
+
+  .btn-cta {
+    @apply inline-flex items-center gap-2
+           px-8 py-3.5 sm:px-[52px] sm:py-[18px] rounded-xl
+           bg-green text-bg
+           font-body font-bold text-[0.88rem] sm:text-[0.95rem]
+           tracking-wide border-none cursor-pointer
+           transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)];
+    box-shadow: 0 0 50px rgba(13,255,127,0.2), 0 4px 24px rgba(0,0,0,0.3);
+  }
+  .btn-cta:hover {
+    @apply -translate-y-[3px] scale-[1.03];
+    box-shadow: 0 0 80px rgba(13,255,127,0.35), 0 8px 40px rgba(0,0,0,0.4) !important;
+  }
+
+  /* ── Glass Badge ── */
+  .glass-badge {
+    @apply inline-flex items-center gap-2.5
+           px-4 py-1.5 rounded-full
+           bg-green/[0.06] backdrop-blur-[12px];
+    border: 1px solid rgba(13,255,127,0.15);
+  }
+
+  /* ── Form Elements ── */
+  .form-input {
+    @apply w-full py-3.5 px-4 rounded-[10px]
+           bg-white/[0.04] text-white
+           font-body text-[0.92rem]
+           outline-none transition-colors duration-200 box-border;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .form-input:focus {
+    border-color: rgba(13,255,127,0.35);
+  }
+  .form-input-error {
+    border-color: #ff5b79 !important;
+  }
+
+  .form-label {
+    @apply block mb-1.5
+           font-cond text-[0.72rem] font-bold
+           tracking-[0.12em] uppercase text-muted;
+  }
+
+  .form-error {
+    @apply font-body text-[0.72rem] text-red mt-1.5;
+  }
+
+  /* ── Dropdown ── */
+  .dropdown-list {
+    @apply absolute top-[calc(100%+4px)] left-0 right-0 z-[1002]
+           rounded-[10px] overflow-hidden
+           backdrop-blur-3xl;
+    border: 1px solid rgba(13,255,127,0.18);
+    background: rgba(8,11,16,0.99);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.65);
+  }
+
+  .dropdown-item {
+    @apply flex items-center gap-2.5
+           py-2.5 px-3.5 cursor-pointer
+           font-body text-sm text-muted
+           transition-colors duration-100
+           select-none;
+  }
+  .dropdown-item:hover {
+    @apply bg-green/[0.07];
+  }
+  .dropdown-item-active {
+    @apply text-white bg-accent-dim;
+  }
+}
+
+/* ─── RESPONSIVE OVERRIDES ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .btn-primary,
+  .btn-secondary {
+    @apply w-full justify-center;
+  }
+}
