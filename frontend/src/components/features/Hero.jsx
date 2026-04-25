@@ -112,7 +112,7 @@ export default function Hero() {
         </div>
 
         {/* ── Headline ───────────────────────────────────────────────────── */}
-        <h1 className="font-body font-extrabold text-[clamp(2.8rem,8vw,4.5rem)] leading-[1.1] text-white mb-6">
+        <h1 className="font-body font-extrabold text-[clamp(2.8rem,9vw,4.5rem)] leading-[1.1] text-white mb-6">
           <span className="block">
             <BlurReveal delay={0.15}>
               Your Edge in
@@ -120,7 +120,7 @@ export default function Hero() {
           </span>
           <span className="block">
             <BlurReveal delay={0.38}>
-              <span className="bg-gradient-to-br from-green via-[#00D4AA] to-green bg-[length:200%_200%] bg-clip-text text-transparent animate-gradient-shift">
+              <span className="bg-gradient-to-br from-green via-[#00D4AA] to-green bg-[length:200%_200%] bg-clip-text text-transparent animate-gradient-shift whitespace-nowrap">
                 Every Market
               </span>
             </BlurReveal>
