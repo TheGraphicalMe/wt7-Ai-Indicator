@@ -296,7 +296,7 @@ export default function Pricing() {
         {/* Horizontal Bars for Custom & Crypto Plans */}
         <div className="flex flex-col gap-6 w-full max-w-[320px] sm:max-w-[400px] md:max-w-5xl mx-auto">
           {pricingPlans.slice(3).map((plan) => (
-            <div key={plan.name} className="relative w-full transition-all duration-500 hover:-translate-y-2">
+            <div key={plan.name} className={`relative w-full transition-all duration-500 hover:-translate-y-2${plan.isCrypto ? ' pt-6 md:pt-0' : ''}`}>
               {/* Fold triangle — BEHIND the card */}
               {!plan.isCrypto && (
                 <div

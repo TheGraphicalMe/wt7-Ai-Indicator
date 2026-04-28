@@ -47,10 +47,10 @@ export default function CryptoModal({ isOpen, onClose, amount = '$99', planName 
   return createPortal(
     <div
       onClick={handleOverlayClick}
-      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto animate-fade-in"
+      className="fixed inset-0 z-[9999] overflow-y-auto p-4 sm:p-6 flex items-start justify-center animate-fade-in"
       style={{ background: 'rgba(5,7,10,0.85)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
     >
-      <div className="relative w-full max-w-[850px] my-4 mx-4 sm:mx-6 animate-scale-in">
+      <div className="relative w-full max-w-[850px] my-4 animate-scale-in">
         
         {/* Premium Rotating Border */}
         <div className="absolute -inset-[2px] rounded-[30px] overflow-hidden pointer-events-none z-0">
