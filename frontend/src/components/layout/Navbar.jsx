@@ -45,12 +45,17 @@ export default function Navbar() {
 
       {/* Right Action — Contact Us */}
       <div className="flex justify-end w-[100px] sm:w-[130px]">
-        <a 
-          href="https://wa.me/7985155368" 
-          className="btn-primary !w-auto !px-4 !py-2 !text-[0.75rem] max-sm:!min-w-0 max-sm:tracking-tight max-sm:!gap-1"
-        >
-          Contact Us
-        </a>
+        <div className="relative flex flex-col items-center">
+          <a
+            href="https://wa.me/918448049554"
+            className="btn-primary !w-auto !px-[14px] !py-[6px] !text-[0.65rem] max-sm:!min-w-0 max-sm:tracking-tight max-sm:!gap-1"
+          >
+            Contact Us
+          </a>
+          <span className="absolute -bottom-[15px] text-[0.5rem] text-[#00000] font-cond font-bold tracking-[0.16em] uppercase whitespace-nowrap drop-shadow-[0_0_8px_rgba(13,255,127,0.5)]">
+            24 x 7 Support
+          </span>
+        </div>
       </div>
     </nav>
   )

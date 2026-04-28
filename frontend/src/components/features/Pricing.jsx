@@ -90,7 +90,7 @@ const pricingPlans = [
     link: '#',
   },
   {
-    name: '1 Year & Lifetime',
+    name: 'Get 1 Year & Lifetime Access',
     price: 'Custom',
     period: '',
     features: [
@@ -100,7 +100,7 @@ const pricingPlans = [
       { text: 'Step-by-Step Video Guides', icon: <CheckIcon /> },
       { text: '1Yr + 2 Months extra if paid via Crypto', icon: <CheckIcon /> },
     ],
-    buttonText: 'Contact Us',
+    buttonText: 'Request Access',
     link: 'https://docs.google.com/forms/',
   },
 ]
@@ -116,36 +116,55 @@ export default function Pricing() {
             <BlurReveal delay={0.1}>Smart AI Plans</BlurReveal>
           </h2>
           <p className="font-body text-[clamp(0.85rem,2vw,1.1rem)] leading-[1.7] text-muted max-w-[500px] mx-auto mb-6">
-            <BlurWordReveal text="Unlock your edge with flexible AI-powered tiers." baseDelay={0.3} stagger={0.035} />
+            <BlurWordReveal text="Unlock your edge with flexible smart tiers." baseDelay={0.3} stagger={0.035} />
           </p>
-          <div className="inline-flex flex-wrap justify-center items-center gap-2 bg-[#0DFF7F]/10 border border-[#0DFF7F]/20 text-[#0DFF7F] rounded-full px-5 py-2 font-bold text-sm sm:text-base animate-pulse shadow-[0_0_15px_rgba(13,255,127,0.2)]">
-            <span>🎉 Get 50% off using this coupon:</span>
-            <span className="text-white bg-[#0DFF7F]/20 px-2 py-0.5 rounded cursor-pointer hover:bg-[#0DFF7F]/30 transition-colors" title="Copy Coupon" onClick={(e) => {
-              navigator.clipboard.writeText('SMARTAI50');
-              const el = e.target;
-              const original = el.innerText;
-              el.innerText = 'Copied!';
-              setTimeout(() => el.innerText = original, 2000);
-            }}>SMARTAI50</span>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full max-w-[320px] sm:max-w-[400px] md:max-w-5xl mx-auto mb-8 sm:mb-12">
           {pricingPlans.slice(0, 3).map((plan, idx) => (
-            <div
-              key={plan.name}
-              className={
-                "group relative flex flex-col rounded-[24px] p-8 transition-all duration-500 overflow-hidden " +
-                "bg-gradient-to-br from-[rgba(255,255,255,0.04)] to-[rgba(255,255,255,0.01)] " +
-                "border border-[rgba(255,255,255,0.15)] " +
-                "hover:border-[#0DFF7F] hover:shadow-[0_0_30px_rgba(13,255,127,0.25)] hover:bg-[rgba(13,255,127,0.03)] " +
-                "hover:-translate-y-3 z-10 hover:z-20"
-              }
-              style={{
-                backdropFilter: 'blur(30px)',
-                WebkitBackdropFilter: 'blur(30px)',
-              }}
-            >
+            <div key={plan.name} className="relative transition-all duration-500 hover:-translate-y-3">
+              {/* Fold triangle — BEHIND the card, peeking out below ribbon at left edge */}
+              <div
+                className="absolute"
+                style={{ top: '40px', left: '-14px', width: 0, height: 0, borderLeft: '14px solid transparent', borderTop: '10px solid #7F1D1D', zIndex: 0 }}
+              />
+
+              {/* Ribbon — ON TOP of card */}
+              <div
+                className="absolute flex items-center pointer-events-none"
+                style={{ top: '16px', left: '-14px', height: '24px', zIndex: 30 }}
+              >
+                <div className="relative bg-gradient-to-b from-[#EF4444] to-[#DC2626] h-full flex items-center pl-5 pr-3 shadow-[0_4px_16px_rgba(0,0,0,0.4)] pointer-events-auto">
+                  <span className="text-white font-cond font-bold text-[0.6rem] uppercase tracking-[0.1em] whitespace-nowrap drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                    LIMITED OFFER · 50% OFF ONLY FOR THIS MONTH
+                  </span>
+                  <div
+                    className="absolute -right-[11px] top-0 w-0 h-0"
+                    style={{
+                      borderTop: '12px solid transparent',
+                      borderBottom: '12px solid transparent',
+                      borderLeft: '11px solid #DC2626',
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* The Card itself */}
+              <div
+                className={
+                  "group relative flex flex-col rounded-[24px] p-8 pt-14 transition-all duration-500 " +
+                  "bg-gradient-to-br from-[rgba(255,255,255,0.04)] to-[rgba(255,255,255,0.01)] " +
+                  "border border-[rgba(255,255,255,0.15)] " +
+                  "hover:border-[#0DFF7F] hover:shadow-[0_0_30px_rgba(13,255,127,0.25)] hover:bg-[rgba(13,255,127,0.03)]"
+                }
+                style={{
+                  backdropFilter: 'blur(30px)',
+                  WebkitBackdropFilter: 'blur(30px)',
+                  position: 'relative',
+                  zIndex: 10,
+                }}
+              >
+
 
               {/* Elite-style Premium Gloss Background */}
               <div
@@ -210,6 +229,7 @@ export default function Pricing() {
                   {plan.buttonText}
                 </a>
               </div>
+              </div>
             </div>
           ))}
         </div>
@@ -219,56 +239,81 @@ export default function Pricing() {
           const plan = pricingPlans[3];
           if (!plan) return null;
           return (
-            <div
-              key={plan.name}
-              className={
-                "group relative flex flex-col md:flex-row items-center justify-between rounded-[24px] p-8 md:p-10 transition-all duration-500 overflow-hidden w-full max-w-[320px] sm:max-w-[400px] md:max-w-5xl mx-auto " +
-                "bg-gradient-to-r from-[rgba(255,255,255,0.06)] to-[rgba(255,255,255,0.02)] " +
-                "border border-[rgba(255,255,255,0.2)] " +
-                "hover:border-[#0DFF7F] hover:shadow-[0_0_40px_rgba(13,255,127,0.3)] hover:bg-[rgba(13,255,127,0.05)] " +
-                "hover:-translate-y-2 z-10 hover:z-20"
-              }
-              style={{
-                backdropFilter: 'blur(30px)',
-                WebkitBackdropFilter: 'blur(30px)',
-              }}
-            >
-              {/* Premium Background Effects */}
-              <div className="absolute inset-0 pointer-events-none rounded-[24px] overflow-hidden">
-                <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-[50%] blur-[80px] opacity-20 bg-[rgba(13,255,127,0.5)] transition-colors duration-500 group-hover:bg-[#0DFF7F] group-hover:opacity-40" />
-                <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] rounded-full blur-[60px] opacity-30 bg-[rgba(13,255,127,0.4)] transition-colors duration-500 group-hover:bg-[#0DFF7F] group-hover:opacity-50" />
+            <div key={plan.name} className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-5xl mx-auto transition-all duration-500 hover:-translate-y-2">
+              {/* Fold triangle — BEHIND the card */}
+              <div
+                className="absolute"
+                style={{ top: '40px', left: '-14px', width: 0, height: 0, borderLeft: '14px solid transparent', borderTop: '10px solid #7F1D1D', zIndex: 0 }}
+              />
+
+              {/* Ribbon — ON TOP of card */}
+              <div
+                className="absolute flex items-center pointer-events-none"
+                style={{ top: '16px', left: '-14px', height: '24px', zIndex: 30 }}
+              >
+                <div className="relative bg-gradient-to-b from-[#EF4444] to-[#DC2626] h-full flex items-center pl-5 pr-3 shadow-[0_4px_16px_rgba(0,0,0,0.4)] pointer-events-auto">
+                  <span className="text-white font-cond font-bold text-[0.6rem] uppercase tracking-[0.1em] whitespace-nowrap drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                    LIMITED OFFER · 50% OFF ONLY FOR THIS MONTH
+                  </span>
+                  <div
+                    className="absolute -right-[11px] top-0 w-0 h-0"
+                    style={{
+                      borderTop: '12px solid transparent',
+                      borderBottom: '12px solid transparent',
+                      borderLeft: '11px solid #DC2626',
+                    }}
+                  />
+                </div>
               </div>
 
-              <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 w-full">
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="font-body font-bold text-3xl md:text-4xl text-white mb-2">{plan.name}</h3>
-                  <div className="flex items-center justify-center md:justify-start mt-4">
-                    {plan.price === 'Custom' ? (
-                       <span className="font-display text-4xl sm:text-5xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#0DFF7F] to-[#00b050] drop-shadow-[0_0_15px_rgba(13,255,127,0.3)]">Contact Us</span>
-                    ) : (
-                       <span className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white">{plan.price}</span>
-                    )}
+              {/* The Card */}
+              <div
+                className={
+                  "group relative flex flex-col md:flex-row items-center justify-between rounded-[24px] pt-12 pb-8 px-8 md:pt-10 md:pb-10 md:px-10 transition-all duration-500 " +
+                  "bg-gradient-to-r from-[rgba(255,255,255,0.06)] to-[rgba(255,255,255,0.02)] " +
+                  "border border-[rgba(255,255,255,0.2)] " +
+                  "hover:border-[#0DFF7F] hover:shadow-[0_0_40px_rgba(13,255,127,0.3)] hover:bg-[rgba(13,255,127,0.05)]"
+                }
+                style={{
+                  backdropFilter: 'blur(30px)',
+                  WebkitBackdropFilter: 'blur(30px)',
+                  position: 'relative',
+                  zIndex: 10,
+                }}
+              >
+
+                {/* Premium Background Effects */}
+                <div className="absolute inset-0 pointer-events-none rounded-[24px] overflow-hidden">
+                  <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-[50%] blur-[80px] opacity-20 bg-[rgba(13,255,127,0.5)] transition-colors duration-500 group-hover:bg-[#0DFF7F] group-hover:opacity-40" />
+                  <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] rounded-full blur-[60px] opacity-30 bg-[rgba(13,255,127,0.4)] transition-colors duration-500 group-hover:bg-[#0DFF7F] group-hover:opacity-50" />
+                </div>
+
+                <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 w-full">
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="font-body font-bold text-3xl md:text-4xl text-white mb-2">{plan.name}</h3>
                   </div>
-                </div>
 
-                <div className="flex-1 w-full max-w-sm border-y md:border-y-0 md:border-l border-[rgba(255,255,255,0.1)] py-6 md:py-0 md:px-8">
-                  <ul className="flex flex-col gap-3 text-left w-fit mx-auto md:mx-0">
-                    {plan.features.map((feature, fIdx) => (
-                      <li key={fIdx} className="flex items-center gap-3">
-                        <div className="shrink-0">{feature.icon}</div>
-                        <span className="font-body text-[15px] text-[rgba(255,255,255,0.9)]">{feature.text}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <div className="flex-1 w-full max-w-sm border-y md:border-y-0 md:border-l border-[rgba(255,255,255,0.1)] py-6 md:py-0 md:px-8">
+                    <ul className="flex flex-col gap-3 text-left w-fit mx-auto md:mx-0">
+                      {plan.features.map((feature, fIdx) => (
+                        <li key={fIdx} className="flex items-center gap-3">
+                          <div className="shrink-0">{feature.icon}</div>
+                          <span className="font-body text-[15px] text-[rgba(255,255,255,0.9)]">{feature.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                <div className="flex-shrink-0 w-full md:w-auto pt-4 md:pt-0">
-                  <button
-                    onClick={open}
-                    className="w-full md:w-[220px] h-14 flex items-center justify-center font-body font-bold text-[#051e0f] bg-green rounded-xl transition-all duration-300 hover:shadow-[0_0_35px_rgba(13,255,127,0.6)] hover:scale-[1.04] active:scale-95 cursor-pointer text-lg whitespace-nowrap px-6"
-                  >
-                    {plan.buttonText}
-                  </button>
+                  <div className="flex-shrink-0 w-full md:w-auto pt-4 md:pt-0">
+                    <a
+                      href="https://wa.me/7985155368"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full md:w-[220px] h-14 flex items-center justify-center font-body font-bold text-[#051e0f] bg-green rounded-xl transition-all duration-300 hover:shadow-[0_0_35px_rgba(13,255,127,0.6)] hover:scale-[1.04] active:scale-95 cursor-pointer text-lg whitespace-nowrap px-6 tracking-[0.05em] uppercase"
+                    >
+                      {plan.buttonText}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
