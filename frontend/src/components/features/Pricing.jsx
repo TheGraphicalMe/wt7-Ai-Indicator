@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { BlurReveal, BlurWordReveal } from '@/components/ui/TextReveal'
 import { usePrebook } from '@/contexts/PrebookContext'
+import CryptoModal from '../layout/CryptoModal'
 import clsx from 'clsx'
 
 const BrainIcon = () => (
@@ -46,6 +48,39 @@ const DiamondIcon = () => (
   </svg>
 )
 
+const StarburstBadge = ({ className }) => {
+  const points = [];
+  const rays = 16;
+  const outerRadius = 50;
+  const innerRadius = 42;
+  const center = 50;
+
+  for (let i = 0; i < rays * 2; i++) {
+    const radius = i % 2 === 0 ? outerRadius : innerRadius;
+    const angle = (i * Math.PI) / rays;
+    const x = center + radius * Math.cos(angle);
+    const y = center + radius * Math.sin(angle);
+    points.push(`${x},${y}`);
+  }
+
+  return (
+    <div className={`relative flex items-center justify-center select-none ${className}`}>
+      <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_4px_10px_rgba(229,62,62,0.6)]">
+        {/* Main starburst shape */}
+        <polygon points={points.join(' ')} fill="#E53E3E" />
+        {/* Inner thin border */}
+        <polygon points={points.join(' ')} fill="none" stroke="#FC8181" strokeWidth="1.5" transform="translate(50,50) scale(0.88) translate(-50,-50)" />
+        
+        {/* Rotated text inside SVG for perfect scaling */}
+        <g transform="translate(50, 50) rotate(-12)">
+          <text x="0" y="-2" fill="#FFFFFF" fontSize="16" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle" letterSpacing="1">SPECIAL</text>
+          <text x="0" y="16" fill="#FFFFFF" fontSize="16" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle" letterSpacing="1">OFFER</text>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
 const pricingPlans = [
   {
     name: '1 Month',
@@ -58,8 +93,8 @@ const pricingPlans = [
       { text: 'Exclusive Community Access', icon: <UsersIcon /> },
       { text: 'Step-by-Step Video Guides', icon: <CheckIcon /> },
     ],
-    buttonText: 'Choose Plan',
-    link: '#',
+    buttonText: 'Buy Now',
+    link: 'https://wzhdwc.courses.store/834722?true&coupon=SMART50',
   },
   {
     name: '3 Months',
@@ -72,8 +107,8 @@ const pricingPlans = [
       { text: 'Exclusive Community Access', icon: <UsersIcon /> },
       { text: 'Step-by-Step Video Guides', icon: <CheckIcon /> },
     ],
-    buttonText: 'Choose Plan',
-    link: '#',
+    buttonText: 'Buy Now',
+    link: 'https://wzhdwc.courses.store/834722?true&coupon=SMART50',
   },
   {
     name: '6 Months',
@@ -86,11 +121,25 @@ const pricingPlans = [
       { text: 'Exclusive Community Access', icon: <UsersIcon /> },
       { text: 'Step-by-Step Video Guides', icon: <CheckIcon /> },
     ],
-    buttonText: 'Choose Plan',
-    link: '#',
+    buttonText: 'Buy Now',
+    link: 'https://wzhdwc.courses.store/834722?true&coupon=SMART50',
   },
   {
-    name: 'Get 1 Year & Lifetime Access',
+    name: '6 Months (Crypto Special)',
+    price: '$99',
+    period: '',
+    features: [
+      { text: 'Real-Time Market Bias', icon: <ChartIcon /> },
+      { text: 'Automated Zone Mapping', icon: <BrainIcon /> },
+      { text: 'Exclusive Community Access', icon: <UsersIcon /> },
+      { text: 'Step-by-Step Video Guides', icon: <CheckIcon /> },
+      { text: 'Fast & Secure Crypto Payment', icon: <DiamondIcon /> },
+    ],
+    buttonText: 'Get Plan',
+    isCrypto: true,
+  },
+  {
+    name: 'Get Lifetime Access',
     price: 'Custom',
     period: '',
     features: [
@@ -107,6 +156,7 @@ const pricingPlans = [
 
 export default function Pricing() {
   const { open } = usePrebook()
+  const [isCryptoModalOpen, setIsCryptoModalOpen] = useState(false)
 
   return (
     <section id="pricing" className="relative py-10 sm:py-[60px] px-4 pb-16 sm:pb-[100px] z-10">
@@ -220,51 +270,69 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                <a
-                  href={plan.link}
-                  target={plan.link.includes('forms') ? '_blank' : '_self'}
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center font-body font-bold text-[#051e0f] bg-green py-3.5 px-6 rounded-xl transition-all duration-300 hover:shadow-[0_0_25px_rgba(13,255,127,0.4)] hover:scale-[1.02] active:scale-95 cursor-pointer"
-                >
-                  {plan.buttonText}
-                </a>
+                {plan.buttonText === 'Request Access' ? (
+                  <button
+                    onClick={open}
+                    className="w-full flex items-center justify-center font-body font-bold text-[#051e0f] bg-green py-3.5 px-6 rounded-xl transition-all duration-300 hover:shadow-[0_0_25px_rgba(13,255,127,0.4)] hover:scale-[1.02] active:scale-95 cursor-pointer border-none"
+                  >
+                    {plan.buttonText}
+                  </button>
+                ) : (
+                  <a
+                    href={plan.link}
+                    target={plan.link.includes('forms') ? '_blank' : '_self'}
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center font-body font-bold text-[#051e0f] bg-green py-3.5 px-6 rounded-xl transition-all duration-300 hover:shadow-[0_0_25px_rgba(13,255,127,0.4)] hover:scale-[1.02] active:scale-95 cursor-pointer"
+                  >
+                    {plan.buttonText}
+                  </a>
+                )}
               </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Horizontal Bar for 1 Year & Lifetime */}
-        {(() => {
-          const plan = pricingPlans[3];
-          if (!plan) return null;
-          return (
-            <div key={plan.name} className="relative w-full max-w-[320px] sm:max-w-[400px] md:max-w-5xl mx-auto transition-all duration-500 hover:-translate-y-2">
+        {/* Horizontal Bars for Custom & Crypto Plans */}
+        <div className="flex flex-col gap-6 w-full max-w-[320px] sm:max-w-[400px] md:max-w-5xl mx-auto">
+          {pricingPlans.slice(3).map((plan) => (
+            <div key={plan.name} className="relative w-full transition-all duration-500 hover:-translate-y-2">
               {/* Fold triangle — BEHIND the card */}
-              <div
-                className="absolute"
-                style={{ top: '40px', left: '-14px', width: 0, height: 0, borderLeft: '14px solid transparent', borderTop: '10px solid #7F1D1D', zIndex: 0 }}
-              />
+              {!plan.isCrypto && (
+                <div
+                  className="absolute"
+                  style={{ top: '40px', left: '-14px', width: 0, height: 0, borderLeft: '14px solid transparent', borderTop: '10px solid #7F1D1D', zIndex: 0 }}
+                />
+              )}
 
               {/* Ribbon — ON TOP of card */}
-              <div
-                className="absolute flex items-center pointer-events-none"
-                style={{ top: '16px', left: '-14px', height: '24px', zIndex: 30 }}
-              >
-                <div className="relative bg-gradient-to-b from-[#EF4444] to-[#DC2626] h-full flex items-center pl-5 pr-3 shadow-[0_4px_16px_rgba(0,0,0,0.4)] pointer-events-auto">
-                  <span className="text-white font-cond font-bold text-[0.6rem] uppercase tracking-[0.1em] whitespace-nowrap drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-                    LIMITED OFFER · 50% OFF ONLY FOR THIS MONTH
-                  </span>
-                  <div
-                    className="absolute -right-[11px] top-0 w-0 h-0"
-                    style={{
-                      borderTop: '12px solid transparent',
-                      borderBottom: '12px solid transparent',
-                      borderLeft: '11px solid #DC2626',
-                    }}
-                  />
+              {!plan.isCrypto && (
+                <div
+                  className="absolute flex items-center pointer-events-none"
+                  style={{ top: '16px', left: '-14px', height: '24px', zIndex: 30 }}
+                >
+                  <div className="relative bg-gradient-to-b from-[#EF4444] to-[#DC2626] h-full flex items-center pl-5 pr-3 shadow-[0_4px_16px_rgba(0,0,0,0.4)] pointer-events-auto">
+                    <span className="text-white font-cond font-bold text-[0.6rem] uppercase tracking-[0.1em] whitespace-nowrap drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                      LIMITED OFFER · 50% OFF ONLY FOR THIS MONTH
+                    </span>
+                    <div
+                      className="absolute -right-[11px] top-0 w-0 h-0"
+                      style={{
+                        borderTop: '12px solid transparent',
+                        borderBottom: '12px solid transparent',
+                        borderLeft: '11px solid #DC2626',
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Starburst Badge — on outer wrapper, overlapping card's top-left corner */}
+              {plan.isCrypto && (
+                <div style={{ position: 'absolute', top: '-18px', left: '-18px', zIndex: 60 }} className="pointer-events-none">
+                  <StarburstBadge className="w-[90px] h-[90px] sm:w-[75px] sm:h-[75px]" />
+                </div>
+              )}
 
               {/* The Card */}
               <div
@@ -272,53 +340,108 @@ export default function Pricing() {
                   "group relative flex flex-col md:flex-row items-center justify-between rounded-[24px] pt-12 pb-8 px-8 md:pt-10 md:pb-10 md:px-10 transition-all duration-500 " +
                   "bg-gradient-to-r from-[rgba(255,255,255,0.06)] to-[rgba(255,255,255,0.02)] " +
                   "border border-[rgba(255,255,255,0.2)] " +
-                  "hover:border-[#0DFF7F] hover:shadow-[0_0_40px_rgba(13,255,127,0.3)] hover:bg-[rgba(13,255,127,0.05)]"
+                  (plan.isCrypto
+                    ? "hover:border-[#3B82F6] hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] hover:bg-[rgba(59,130,246,0.05)]"
+                    : "hover:border-[#0DFF7F] hover:shadow-[0_0_40px_rgba(13,255,127,0.3)] hover:bg-[rgba(13,255,127,0.05)]")
                 }
                 style={{
                   backdropFilter: 'blur(30px)',
                   WebkitBackdropFilter: 'blur(30px)',
                   position: 'relative',
                   zIndex: 10,
+                  overflow: plan.isCrypto ? 'visible' : undefined,
                 }}
               >
 
                 {/* Premium Background Effects */}
                 <div className="absolute inset-0 pointer-events-none rounded-[24px] overflow-hidden">
-                  <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-[50%] blur-[80px] opacity-20 bg-[rgba(13,255,127,0.5)] transition-colors duration-500 group-hover:bg-[#0DFF7F] group-hover:opacity-40" />
-                  <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] rounded-full blur-[60px] opacity-30 bg-[rgba(13,255,127,0.4)] transition-colors duration-500 group-hover:bg-[#0DFF7F] group-hover:opacity-50" />
+                  {plan.isCrypto ? (
+                    <>
+                      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-[50%] blur-[80px] opacity-40 bg-[rgba(59,130,246,0.6)] group-hover:opacity-60 transition-opacity duration-500" />
+                      <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full blur-[60px] opacity-40 bg-[rgba(59,130,246,0.5)] group-hover:opacity-60 transition-opacity duration-500" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-[100px] opacity-20 bg-[#60A5FA]" />
+                    </>
+                  ) : (
+                    <>
+                      <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-[50%] blur-[80px] opacity-20 transition-colors duration-500 bg-[rgba(13,255,127,0.5)] group-hover:bg-[#0DFF7F] group-hover:opacity-40" />
+                      <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] rounded-full blur-[60px] opacity-30 transition-colors duration-500 bg-[rgba(13,255,127,0.4)] group-hover:bg-[#0DFF7F] group-hover:opacity-50" />
+                    </>
+                  )}
                 </div>
 
-                <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 w-full">
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="font-body font-bold text-3xl md:text-4xl text-white mb-2">{plan.name}</h3>
-                  </div>
+                {plan.isCrypto ? (
+                  <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 w-full">
+                    
+                    <h3 className="font-body font-bold text-2xl md:text-3xl text-white whitespace-nowrap">
+                      6 Months Plan <span className="font-normal text-[rgba(255,255,255,0.7)] text-xl md:text-2xl">for just</span>
+                    </h3>
 
-                  <div className="flex-1 w-full max-w-sm border-y md:border-y-0 md:border-l border-[rgba(255,255,255,0.1)] py-6 md:py-0 md:px-8">
-                    <ul className="flex flex-col gap-3 text-left w-fit mx-auto md:mx-0">
-                      {plan.features.map((feature, fIdx) => (
-                        <li key={fIdx} className="flex items-center gap-3">
-                          <div className="shrink-0">{feature.icon}</div>
-                          <span className="font-body text-[15px] text-[rgba(255,255,255,0.9)]">{feature.text}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    <div className="font-display text-6xl md:text-7xl md:-ml-12 font-bold tracking-tight text-[#3B82F6] drop-shadow-[0_0_20px_rgba(59,130,246,0.4)]">
+                      {plan.price}
+                    </div>
 
-                  <div className="flex-shrink-0 w-full md:w-auto pt-4 md:pt-0">
-                    <a
-                      href="https://wa.me/7985155368"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full md:w-[220px] h-14 flex items-center justify-center font-body font-bold text-[#051e0f] bg-green rounded-xl transition-all duration-300 hover:shadow-[0_0_35px_rgba(13,255,127,0.6)] hover:scale-[1.04] active:scale-95 cursor-pointer text-lg whitespace-nowrap px-6 tracking-[0.05em] uppercase"
+                    <div className="font-cond font-bold tracking-widest uppercase text-[13px] md:text-[15px] text-[#93C5FD] bg-[#3B82F6]/10 py-1.5 px-5 rounded-full border border-[#3B82F6]/30">
+                      If paid via crypto
+                    </div>
+
+                    <button
+                      onClick={() => setIsCryptoModalOpen(true)}
+                      className="w-full md:w-[240px] h-14 flex items-center justify-center font-body font-bold text-white bg-gradient-to-r from-[#3B82F6] to-[#2563EB] rounded-xl transition-all duration-300 hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] hover:scale-[1.04] active:scale-95 cursor-pointer text-lg whitespace-nowrap px-6 tracking-[0.05em] uppercase border-none"
                     >
                       {plan.buttonText}
-                    </a>
+                    </button>
                   </div>
-                </div>
+                ) : (
+                  /* ── Standard Plan: 3-column layout ── */
+                  <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 w-full">
+                    <div className="flex-1 text-center md:text-left">
+                      <h3 className="font-body font-bold text-3xl md:text-4xl text-white mb-2">{plan.name}</h3>
+                      {plan.price && plan.price !== 'Custom' && (
+                        <div className="font-display text-4xl font-bold tracking-tight text-green">{plan.price}</div>
+                      )}
+                    </div>
+
+                    <div className="flex-1 w-full max-w-sm border-y md:border-y-0 md:border-l border-[rgba(255,255,255,0.1)] py-6 md:py-0 md:px-8">
+                      <ul className="flex flex-col gap-3 text-left w-fit mx-auto md:mx-0">
+                        {plan.features.map((feature, fIdx) => (
+                          <li key={fIdx} className="flex items-center gap-3">
+                            <div className="shrink-0">{feature.icon}</div>
+                            <span className="font-body text-[15px] text-[rgba(255,255,255,0.9)]">{feature.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="flex-shrink-0 w-full md:w-auto pt-4 md:pt-0">
+                      {plan.buttonText === 'Request Access' ? (
+                        <button
+                          onClick={open}
+                          className="w-full md:w-[220px] h-14 flex items-center justify-center font-body font-bold text-[#051e0f] bg-green rounded-xl transition-all duration-300 hover:shadow-[0_0_35px_rgba(13,255,127,0.6)] hover:scale-[1.04] active:scale-95 cursor-pointer text-lg whitespace-nowrap px-6 tracking-[0.05em] uppercase border-none"
+                        >
+                          {plan.buttonText}
+                        </button>
+                      ) : (
+                        <a
+                          href={plan.link || "https://wa.me/7985155368"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full md:w-[220px] h-14 flex items-center justify-center font-body font-bold text-[#051e0f] bg-green rounded-xl transition-all duration-300 hover:shadow-[0_0_35px_rgba(13,255,127,0.6)] hover:scale-[1.04] active:scale-95 cursor-pointer text-lg whitespace-nowrap px-6 tracking-[0.05em] uppercase"
+                        >
+                          {plan.buttonText}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-          );
-        })()}
+          ))}
+        </div>
+
+        <CryptoModal 
+          isOpen={isCryptoModalOpen} 
+          onClose={() => setIsCryptoModalOpen(false)} 
+        />
       </div>
     </section>
   )

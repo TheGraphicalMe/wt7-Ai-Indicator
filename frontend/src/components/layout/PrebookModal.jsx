@@ -1,9 +1,9 @@
 // ─── AI INDICATOR — PREBOOK MODAL FORM ───────────────────────────────────────
 import { useState, useRef, useEffect } from 'react'
 import { countries, getEmojiFlag } from 'countries-list'
+import { createPortal } from 'react-dom'
 import clsx from 'clsx'
 import { GOOGLE_FORM_CONFIG } from '@/lib/constants'
-import { validators } from '@/lib/validators'
 import { usePrebook } from '@/contexts/PrebookContext'
 
 // ─── BUILD COUNTRIES ARRAY FROM PACKAGE (252 countries, A–Z) ─────────────────
@@ -16,104 +16,11 @@ const COUNTRIES = Object.entries(countries)
   }))
   .sort((a, b) => a.name.localeCompare(b.name))
 
-// ─── SEARCHABLE COUNTRY SELECT ────────────────────────────────────────────────
-function CountrySelect({ value, onChange, onDialChange, error }) {
-  const [query, setQuery] = useState(value || '')
-  const [open, setOpen] = useState(false)
-  const [focused, setFocused] = useState(false)
-  const wrapRef = useRef(null)
-
-  useEffect(() => { setQuery(value || '') }, [value])
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target)) {
-        setOpen(false)
-        const match = COUNTRIES.find(c => c.name.toLowerCase() === query.toLowerCase())
-        if (!match) setQuery(value || '')
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [query, value])
-
-  const showAll = !query || query === value
-  const filtered = showAll
-    ? COUNTRIES
-    : COUNTRIES.filter(c => c.name.toLowerCase().includes(query.toLowerCase()))
-
-  const handleSelect = (c) => {
-    setQuery(c.name)
-    onChange(c.name)
-    onDialChange(c.dial)
-    setOpen(false)
-  }
-
-  const selectedCountry = COUNTRIES.find(c => c.name.toLowerCase() === query.toLowerCase())
-
-  return (
-    <div ref={wrapRef} className="relative">
-      <div className="relative">
-        {selectedCountry && (
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[1.1rem] pointer-events-none leading-none">
-            {selectedCountry.flag}
-          </span>
-        )}
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); setOpen(true); if (!e.target.value) onChange('') }}
-          onFocus={(e) => { setFocused(true); setOpen(true); setTimeout(() => e.target.select(), 0) }}
-          onBlur={() => setFocused(false)}
-          placeholder="Search country…"
-          autoComplete="off"
-          className={clsx(
-            'form-input pr-10',
-            selectedCountry ? 'pl-[42px]' : 'pl-4',
-            error && 'form-input-error',
-            focused && !error && 'border-accent-border',
-          )}
-        />
-        <span
-          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[0.55rem] text-muted pointer-events-none transition-transform duration-200"
-          style={{ transform: `translateY(-50%) rotate(${open ? 180 : 0}deg)` }}
-        >
-          ▼
-        </span>
-      </div>
-
-      {open && (
-        <div className="dropdown-list max-h-[210px] overflow-y-auto">
-          {filtered.length === 0 ? (
-            <div className="py-3 px-3.5 font-body text-[0.85rem] text-muted">
-              No country found
-            </div>
-          ) : (
-            filtered.map((c) => (
-              <div
-                key={c.code}
-                onMouseDown={() => handleSelect(c)}
-                className={clsx(
-                  'dropdown-item flex items-center gap-3',
-                  value === c.name && 'dropdown-item-active',
-                )}
-              >
-                <span className="text-[1.05rem] leading-none shrink-0">{c.flag}</span>
-                <span className="flex-1">{c.name}</span>
-              </div>
-            ))
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
-
 // ─── EXPERIENCE SELECT ────────────────────────────────────────────────────────
 const EXPERIENCES = [
-  'Beginner (0-1 yr)',
-  'Intermediate (2-3 yrs)',
-  'Advanced (3+ yrs)',
+  'Beginner - 0 Experience',
+  'Advance - 2+  year Experience',
+  'Expert -  4+ year Experience',
 ]
 
 function ExperienceSelect({ value, onChange, error }) {
@@ -167,6 +74,101 @@ function ExperienceSelect({ value, onChange, error }) {
             </div>
           ))}
         </div>
+      )}
+    </div>
+  )
+}
+
+// ─── PLAN SELECT ──────────────────────────────────────────────────────────────
+const PLAN_OPTIONS = [
+  '7 YEAR ACCESS',
+  'LIFETIME ACCESS',
+]
+
+function PlanSelect({ value, onChange, error }) {
+  const [open, setOpen] = useState(false)
+  const wrapRef = useRef(null)
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  return (
+    <div ref={wrapRef} className="relative">
+      <div
+        onClick={() => setOpen(!open)}
+        className={clsx(
+          'form-input flex items-center justify-between cursor-pointer select-none',
+          error && 'form-input-error',
+          !value && 'text-muted'
+        )}
+        tabIndex={0}
+      >
+        <span>{value || 'Select your plan...'}</span>
+        <span
+          className="text-[0.6rem] text-muted transition-transform duration-200"
+          style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+        >
+          ▼
+        </span>
+      </div>
+
+      {open && (
+        <div className="dropdown-list">
+          {PLAN_OPTIONS.map((plan) => (
+            <div
+              key={plan}
+              onMouseDown={() => { onChange(plan); setOpen(false) }}
+              className={clsx(
+                'dropdown-item font-body text-[0.92rem]',
+                value === plan && 'dropdown-item-active',
+              )}
+            >
+              {plan}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ─── STAR RATING ──────────────────────────────────────────────────────────────
+function StarRating({ value, onChange }) {
+  const [hovered, setHovered] = useState(0)
+
+  return (
+    <div className="flex items-center gap-1.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          type="button"
+          onClick={() => onChange(star)}
+          onMouseEnter={() => setHovered(star)}
+          onMouseLeave={() => setHovered(0)}
+          className="cursor-pointer bg-transparent border-none p-0 transition-transform duration-200 hover:scale-125"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill={(hovered || value) >= star ? '#FFD700' : 'rgba(255,255,255,0.1)'}
+            stroke={(hovered || value) >= star ? '#FFD700' : 'rgba(255,255,255,0.2)'}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        </button>
+      ))}
+      {value > 0 && (
+        <span className="text-white/50 text-xs font-body ml-2">{value}/5</span>
       )}
     </div>
   )
@@ -281,7 +283,36 @@ function PhoneInput({ dialCode, onDialChange, number, onNumberChange, error }) {
 }
 
 // ─── DEFAULT STATE ────────────────────────────────────────────────────────────
-const DEFAULT_FORM = { name: '', email: '', experience: '', dialCode: '+91', phoneNumber: '', city: '', country: 'India' }
+const DEFAULT_FORM = { name: '', email: '', experience: '', dialCode: '+91', phoneNumber: '', summary: '', priority: 0 }
+
+// ─── VALIDATORS ───────────────────────────────────────────────────────────────
+const formValidators = {
+  name: (v) => {
+    if (!v.trim()) return 'Name is required'
+    if (v.trim().length < 2) return 'Name is too short'
+    if (!/^[a-zA-Z\s'.]+$/.test(v.trim())) return 'Name should only contain letters'
+    return ''
+  },
+  email: (v) => {
+    if (!v.trim()) return 'Email is required'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())) return 'Enter a valid email address'
+    return ''
+  },
+  phoneNumber: (v) => {
+    const digits = v.replace(/\s/g, '')
+    if (!digits) return 'Phone number is required'
+    if (!/^\d{6,14}$/.test(digits)) return 'Enter 6–14 digits'
+    return ''
+  },
+  experience: (v) => {
+    if (!v) return 'Please select your trading experience'
+    return ''
+  },
+  summary: (v) => {
+    if (!v) return 'Please select a plan'
+    return ''
+  },
+}
 
 // ─── MODAL ────────────────────────────────────────────────────────────────────
 export default function PrebookModal() {
@@ -294,17 +325,15 @@ export default function PrebookModal() {
 
   const update = (field) => (val) => {
     setForm(prev => ({ ...prev, [field]: val }))
-    if (errors[field] && validators[field] && !validators[field](val)) {
+    if (errors[field] && formValidators[field] && !formValidators[field](val)) {
       setErrors(prev => ({ ...prev, [field]: '' }))
     }
   }
 
   const validate = () => {
     const next = {}
-    for (const key of Object.keys(validators)) {
-      const err = key === 'country'
-        ? validators[key](form[key] ?? '', COUNTRIES)
-        : validators[key](form[key] ?? '')
+    for (const key of Object.keys(formValidators)) {
+      const err = formValidators[key](form[key] ?? '')
       if (err) next[key] = err
     }
     setErrors(next)
@@ -322,8 +351,8 @@ export default function PrebookModal() {
       fd.append(GOOGLE_FORM_CONFIG.fields.email, form.email.trim())
       fd.append(GOOGLE_FORM_CONFIG.fields.experience, form.experience)
       fd.append(GOOGLE_FORM_CONFIG.fields.phone, `${form.dialCode} ${form.phoneNumber.trim()}`)
-      fd.append(GOOGLE_FORM_CONFIG.fields.city, form.city.trim())
-      fd.append(GOOGLE_FORM_CONFIG.fields.country, form.country.trim())
+      fd.append(GOOGLE_FORM_CONFIG.fields.summary, form.summary)
+      fd.append(GOOGLE_FORM_CONFIG.fields.priority, form.priority > 0 ? String(form.priority) : '3')
 
       await fetch(GOOGLE_FORM_CONFIG.actionUrl, { method: 'POST', mode: 'no-cors', body: fd })
 
@@ -345,12 +374,13 @@ export default function PrebookModal() {
     if (e.target === e.currentTarget) resetAndClose()
   }
 
-  return (
+  return createPortal(
     <div
       onClick={handleOverlayClick}
-      className="fixed inset-0 z-[9999] bg-bg/60 backdrop-blur-[10px] overflow-y-auto p-4 sm:p-6 flex animate-fade-in"
+      className="fixed inset-0 z-[9999] overflow-y-auto p-4 sm:p-6 flex items-start justify-center animate-fade-in"
+      style={{ background: 'rgba(5,7,10,0.85)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
     >
-      <div className="relative w-full max-w-[520px] m-auto animate-scale-in">
+      <div className="relative w-full max-w-[520px] my-4 animate-scale-in">
 
         {/* Premium Rotating Border Background - Longer Tails */}
         <div className="absolute -inset-[2px] rounded-[33px] overflow-hidden pointer-events-none z-0">
@@ -416,7 +446,7 @@ export default function PrebookModal() {
                   You're In!
                 </h3>
                 <p className="font-body text-muted text-[1rem] leading-relaxed mb-8 max-w-[340px]">
-                  We've received your request for the 1 Year / Lifetime plan. Our team will contact you shortly.
+                  We've received your request for the {form.summary || 'Lifetime'} plan. Our team will contact you shortly.
                 </p>
                 <button
                   onClick={resetAndClose}
@@ -435,18 +465,18 @@ export default function PrebookModal() {
                   <div className="inline-flex glass-badge mb-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-green animate-pulse-dot" />
                     <span className="font-cond font-bold text-[0.75rem] tracking-[0.15em] text-green uppercase">
-                      1 Year & Lifetime Access
+                      Lifetime Access
                     </span>
                   </div>
                   <h3 className="font-cond text-[clamp(1.8rem,4vw,2.2rem)] font-black uppercase text-white leading-[1.1] mb-3">
                     Get <span className="text-transparent bg-clip-text bg-gradient-to-r from-green to-accent-lt drop-shadow-[0_0_15px_rgba(13,255,127,0.3)]">Smart AI</span>
                   </h3>
                   <p className="font-body text-muted text-[0.92rem] leading-relaxed max-w-[320px] mx-auto">
-                    Please fill out this form and our team will get back to you with the custom payment details.
+                    Please fill your details correctly and our team will get back to you with the payment details.
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
                   <div>
                     <label className="form-label">Full Name</label>
@@ -471,16 +501,6 @@ export default function PrebookModal() {
                   </div>
 
                   <div>
-                    <label className="form-label">Trading Experience</label>
-                    <ExperienceSelect
-                      value={form.experience}
-                      onChange={update('experience')}
-                      error={errors.experience}
-                    />
-                    {errors.experience && <p className="form-error">{errors.experience}</p>}
-                  </div>
-
-                  <div>
                     <label className="form-label">Whatsapp Number</label>
                     <PhoneInput
                       dialCode={form.dialCode}
@@ -494,25 +514,31 @@ export default function PrebookModal() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="form-label">City</label>
-                      <input
-                        type="text" value={form.city}
-                        onChange={(e) => update('city')(e.target.value)}
-                        placeholder="Your city"
-                        className={clsx('form-input', errors.city && 'form-input-error')}
+                      <label className="form-label">Plan</label>
+                      <PlanSelect
+                        value={form.summary}
+                        onChange={update('summary')}
+                        error={errors.summary}
                       />
-                      {errors.city && <p className="form-error">{errors.city}</p>}
+                      {errors.summary && <p className="form-error">{errors.summary}</p>}
                     </div>
                     <div>
-                      <label className="form-label">Country</label>
-                      <CountrySelect
-                        value={form.country}
-                        onChange={update('country')}
-                        onDialChange={update('dialCode')}
-                        error={errors.country}
+                      <label className="form-label">Trading Experience</label>
+                      <ExperienceSelect
+                        value={form.experience}
+                        onChange={update('experience')}
+                        error={errors.experience}
                       />
-                      {errors.country && <p className="form-error">{errors.country}</p>}
+                      {errors.experience && <p className="form-error">{errors.experience}</p>}
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="form-label">How important is this to you? (Priority)</label>
+                    <StarRating
+                      value={form.priority}
+                      onChange={update('priority')}
+                    />
                   </div>
 
                   <button
@@ -546,6 +572,7 @@ export default function PrebookModal() {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

@@ -50,13 +50,13 @@ export const FEATURES = [
 
 // ─── GOOGLE FORM CONFIG ───────────────────────────────────────────────────────
 export const GOOGLE_FORM_CONFIG = {
-  actionUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSdiAnSwi9JqFfM9Q-zzVn36IqDBP6qw1VstSaS4UZTZkctb2g/formResponse',
+  actionUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfk0AlkDB67V7h3ILY-Ng13HA9vXKhctPdecE58AYRk1NstPw/formResponse',
   fields: {
     name:       'entry.2116052852',
     phone:      'entry.1558582620',
-    email:      'entry.619863253',
-    experience: 'entry.1625147109',
-    city:       'entry.1060472253',
-    country:    'entry.288713975',
+    email:      'entry.1444575549',
+    summary:    'entry.1060472253',
+    experience: 'entry.288713975',
+    priority:   'entry.60996309',
   },
 }
