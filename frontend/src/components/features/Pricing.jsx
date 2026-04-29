@@ -280,7 +280,7 @@ export default function Pricing() {
                 ) : (
                   <a
                     href={plan.link}
-                    target={plan.link.includes('forms') ? '_blank' : '_self'}
+                    target='_blank'
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center font-body font-bold text-[#051e0f] bg-green py-3.5 px-6 rounded-xl transition-all duration-300 hover:shadow-[0_0_25px_rgba(13,255,127,0.4)] hover:scale-[1.02] active:scale-95 cursor-pointer"
                   >

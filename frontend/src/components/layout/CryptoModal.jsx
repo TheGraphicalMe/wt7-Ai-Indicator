@@ -187,8 +187,8 @@ export default function CryptoModal({ isOpen, onClose, amount = '$99', planName 
                     </button>
                   </div>
                   <div className="flex items-center gap-1.5 mt-2.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-                    <span className="text-[#F59E0B] text-[11px] font-body">Send only USDT on <strong>{activeNetwork.name}</strong> network</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                    <span className="text-[#F59E0B] text-[11px] font-body">Sending crypto on the wrong network may result in <strong>Permanent Loss of Funds</strong>. Please <strong>Double-check</strong> before proceeding.</span>
                   </div>
                 </div>
 

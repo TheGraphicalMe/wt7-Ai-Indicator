@@ -170,3 +170,66 @@
     @apply w-full justify-center;
   }
 }
+
+/* ─── PREMIUM CONTACT BUTTON ─────────────────────────────────────────────── */
+.glow-on-hover {
+    border: none;
+    outline: none;
+    color: #0DFF7F;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 9999px;
+    background: transparent;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(13, 255, 127, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Outer spinning conic gradient */
+.glow-on-hover:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        transparent 20%,
+        #0DFF7F 50%,
+        #64DCFF 60%,
+        transparent 70%
+    );
+    z-index: -2;
+    animation: spinGlow 4s linear infinite;
+    transform-origin: center center;
+    opacity: 1;
+}
+
+/* Inner dark background, leaving a 1.5px border */
+.glow-on-hover:after {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    background: #080b10;
+    z-index: -1;
+    border-radius: 9999px;
+    transition: background 0.3s ease;
+}
+
+.glow-on-hover:hover {
+    color: #ffffff;
+    box-shadow: 0 0 25px rgba(13, 255, 127, 0.4);
+    transform: translateY(-1px);
+}
+
+.glow-on-hover:hover:after {
+    background: #0d141e; /* slight lighter dark inside */
+}
+
+@keyframes spinGlow {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}

@@ -106,8 +106,8 @@ export default function Hero() {
         {/* ── Badge ──────────────────────────────────────────────────────── */}
         <div className="glass-badge mb-14 animate-blur-reveal-badge [animation-delay:0.05s]">
           <span className="w-1.5 h-1.5 rounded-full bg-green shadow-[0_0_10px_#0DFF7F,0_0_20px_rgba(13,255,127,0.4)] animate-pulse-dot" />
-          <span className="font-body text-[0.7rem] sm:text-[0.65rem] font-semibold tracking-[0.14em] uppercase text-green">
-            Smart AI Access · Now Available
+          <span className="font-body text-[0.55rem] sm:text-[0.65rem] font-semibold tracking-[0.08em] sm:tracking-[0.14em] uppercase text-green inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
+            Made in India <img src="https://emojicdn.elk.sh/🇮🇳?style=apple" alt="India" className="w-[14px] sm:w-[18px] h-auto -mt-0.5" /> | Engineered by IITians ❤️
           </span>
         </div>
 

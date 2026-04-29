@@ -2,50 +2,50 @@
 
 export const FEATURES = [
   {
+    icon: '🌍',
+    title: 'Works Across All Markets',
+    desc: 'Crypto 🪙 | Gold 🟡 | Stocks 📈 | Forex 💱',
+  },
+  {
     icon: '📊',
-    title: 'Multi-Timeframe Market Trends',
-    desc: 'Get clear trend analysis across all timeframes so you always know the bigger picture.',
+    title: 'Multi-Timeframe Trend Analysis',
+    desc: 'See the bigger picture & sniper entries 🎯',
   },
   {
-    icon: '🎯',
-    title: 'Accurate Market Bias',
-    desc: 'No more confusion — Smart AI helps you understand exactly where the market is likely headed.',
+    icon: '🔗',
+    title: 'Trend Correlation',
+    desc: 'Understand how markets move together 🔄',
   },
   {
-    icon: '🤖',
+    icon: '📉',
+    title: 'Dynamic Trendlines for intraday',
+    desc: 'Auto-adjusting for precision trading ⚡',
+  },
+  {
+    icon: '🧱',
     title: 'Automatic Order Blocks',
-    desc: 'Instantly identify high-probability order blocks without manual effort — no more guessing key zones.',
+    desc: 'Smart institutional zones detected 🧠',
+  },
+  {
+    icon: '🌊',
+    title: 'Monthly Liquidity Pools',
+    desc: 'Track where the real money flows 💰',
+  },
+  {
+    icon: '🔄',
+    title: 'Automatic Swing Trades',
+    desc: 'Catch big moves effortlessly 🚀',
+  },
+  {
+    icon: '⚡',
+    title: 'Automatic Scalping',
+    desc: 'Quick entries, fast profits 💸',
   },
   {
     icon: '🌙',
     title: 'Moon Cycle Insights',
     desc: 'Unique edge using lunar cycles to identify potential turning points in the market.',
   },
-  {
-    icon: '💧',
-    title: 'Pending Liquidity Zones',
-    desc: 'Identify where liquidity is resting and where big moves are likely to happen.',
-  },
-  {
-    icon: '🧭',
-    title: 'Clear Direction, No Guesswork',
-    desc: 'Stay aligned with the market instead of fighting it.',
-  },
-  {
-    icon: '📈',
-    title: 'Capture Bigger Moves',
-    desc: 'Ride proper trends and maximize your profits instead of exiting early.',
-  },
-  {
-    icon: '🧠',
-    title: 'Enhance Your Trading Skills',
-    desc: 'Improve decision-making and develop a professional trading mindset.',
-  },
-  {
-    icon: '⚡',
-    title: 'Trade With Confidence',
-    desc: 'Eliminate doubt and execute trades with clarity and precision.',
-  },  
 ]
 
 // ─── GOOGLE FORM CONFIG ───────────────────────────────────────────────────────
