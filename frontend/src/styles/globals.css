@@ -1,0 +1,945 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Smart AI — SMART AI · GLOBAL STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS CUSTOM PROPERTIES ──────────────────────────────────────────────── */
+:root {
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-cond: 'Barlow Condensed', sans-serif;
+  --accent: #9B6DFF;
+  --accent-lt: #c9adff;
+}
+
+/* ─── BASE LAYER ─────────────────────────────────────────────────────────── */
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    @apply m-0 p-0 box-border;
+  }
+
+  html {
+    @apply scroll-smooth antialiased overflow-x-hidden;
+  }
+
+  body {
+    @apply font-body bg-bg text-white overflow-x-hidden;
+  }
+
+  a {
+    @apply text-inherit;
+  }
+
+  img {
+    @apply max-w-full block;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-[5px];
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-green/20 rounded;
+  }
+}
+
+/* ─── COMPONENT LAYER ────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Container */
+  .container {
+    @apply w-full max-w-[1100px] mx-auto px-4 sm:px-6;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 sm:px-10 sm:py-4 rounded-[10px] bg-green text-bg font-body font-bold text-[0.85rem] sm:text-[0.92rem] tracking-wide border-none cursor-pointer animate-button-breathe;
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 40px rgba(13, 255, 127, 0.2), 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-primary:hover {
+    @apply -translate-y-0.5 scale-[1.02];
+    box-shadow: 0 0 60px rgba(13, 255, 127, 0.4), 0 8px 40px rgba(0, 0, 0, 0.4);
+    animation-play-state: paused;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 sm:px-9 sm:py-4 rounded-[10px] bg-white/[0.04] text-muted-lt no-underline font-body font-semibold text-[0.85rem] sm:text-[0.92rem] backdrop-blur-[12px];
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-secondary:hover {
+    @apply bg-white/[0.08] text-white -translate-y-0.5;
+    border-color: rgba(13, 255, 127, 0.3);
+  }
+
+  .btn-cta {
+    @apply inline-flex items-center gap-2 px-8 py-3.5 sm:px-[52px] sm:py-[18px] rounded-xl bg-green text-bg font-body font-bold text-[0.88rem] sm:text-[0.95rem] tracking-wide border-none cursor-pointer;
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 50px rgba(13, 255, 127, 0.2), 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-cta:hover {
+    @apply -translate-y-[3px] scale-[1.03];
+    box-shadow: 0 0 80px rgba(13, 255, 127, 0.35), 0 8px 40px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* ── Glass Badge ── */
+  .glass-badge {
+    @apply inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-green/[0.06] backdrop-blur-[12px];
+    border: 1px solid rgba(13, 255, 127, 0.15);
+  }
+
+  /* ── Form Elements ── */
+  .form-input {
+    @apply w-full py-3.5 px-4 rounded-[10px] bg-white/[0.04] text-white font-body text-[0.92rem] outline-none transition-colors duration-200 box-border;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .form-input:focus {
+    border-color: rgba(13, 255, 127, 0.35);
+  }
+
+  .form-input-error {
+    border-color: #ff5b79 !important;
+  }
+
+  .form-label {
+    @apply block mb-1.5 font-cond text-[0.72rem] font-bold tracking-[0.12em] uppercase text-muted;
+  }
+
+  .form-error {
+    @apply font-body text-[0.72rem] text-red mt-1.5;
+  }
+
+  /* ── Dropdown ── */
+  .dropdown-list {
+    @apply absolute top-[calc(100%+4px)] left-0 right-0 z-[1002] rounded-[10px] overflow-hidden backdrop-blur-3xl;
+    border: 1px solid rgba(13, 255, 127, 0.18);
+    background: rgba(8, 11, 16, 0.99);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+  }
+
+  .dropdown-item {
+    @apply flex items-center gap-2.5 py-2.5 px-3.5 cursor-pointer font-body text-sm text-muted transition-colors duration-100 select-none;
+  }
+
+  .dropdown-item:hover {
+    @apply bg-green/[0.07];
+  }
+
+  .dropdown-item-active {
+    @apply text-white bg-accent-dim;
+  }
+}
+
+/* ─── RESPONSIVE OVERRIDES ───────────────────────────────────────────────── */
+@media (max-width: 640px) {
+
+  .btn-primary,
+  .btn-secondary {
+    @apply w-full justify-center;
+  }
+}
+
+/* ─── PREMIUM CONTACT BUTTON ─────────────────────────────────────────────── */
+.glow-on-hover {
+  border: none;
+  outline: none;
+  color: #0DFF7F;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 9999px;
+  background: transparent;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(13, 255, 127, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Outer spinning conic gradient */
+.glow-on-hover:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background: conic-gradient(from 0deg,
+      transparent 0%,
+      transparent 20%,
+      #0DFF7F 50%,
+      #64DCFF 60%,
+      transparent 70%);
+  z-index: -2;
+  animation: spinGlow 4s linear infinite;
+  transform-origin: center center;
+  opacity: 1;
+}
+
+/* Inner dark background, leaving a 1.5px border */
+.glow-on-hover:after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: #080b10;
+  z-index: -1;
+  border-radius: 9999px;
+  transition: background 0.3s ease;
+}
+
+.glow-on-hover:hover {
+  color: #ffffff;
+  box-shadow: 0 0 25px rgba(13, 255, 127, 0.4);
+  transform: translateY(-1px);
+}
+
+.glow-on-hover:hover:after {
+  background: #0d141e;
+  /* slight lighter dark inside */
+}
+
+@keyframes spinGlow {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CRYPTO CARD — PREMIUM ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Rotating Conic Border ─────────────────────────────────────────────── */
+@keyframes cryptoBorderSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cryptoBorderFlow {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.crypto-card-wrapper {
+  position: relative;
+  border-radius: 26px;
+  padding: 2px;
+  overflow: visible;
+  isolation: isolate;
+  transition: box-shadow 0.4s ease, filter 0.4s ease;
+}
+
+.crypto-card-wrapper:hover {
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.35),
+    0 0 60px rgba(59, 130, 246, 0.2),
+    0 0 100px rgba(236, 72, 153, 0.15);
+}
+
+.crypto-card-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 27px;
+  background: linear-gradient(135deg,
+      #06B6D4,
+      #3B82F6,
+      #8B5CF6,
+      #EC4899,
+      #8B5CF6,
+      #3B82F6,
+      #06B6D4);
+  background-size: 200% 200%;
+  background-repeat: no-repeat;
+  animation: cryptoBorderFlow 8s ease-in-out infinite alternate;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+.crypto-card-wrapper:hover::before {
+  opacity: 1;
+  background: linear-gradient(135deg,
+      #22D3EE,
+      #60A5FA,
+      #A78BFA,
+      #F472B6,
+      #A78BFA,
+      #60A5FA,
+      #22D3EE);
+}
+
+.crypto-card-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 32px;
+  background: linear-gradient(135deg,
+      rgba(6, 182, 212, 0.25),
+      rgba(59, 130, 246, 0.2),
+      rgba(139, 92, 246, 0.2),
+      rgba(236, 72, 153, 0.25),
+      rgba(139, 92, 246, 0.2),
+      rgba(59, 130, 246, 0.2),
+      rgba(6, 182, 212, 0.25));
+  background-size: 200% 200%;
+  background-repeat: no-repeat;
+  animation: cryptoBorderFlow 8s ease-in-out infinite alternate;
+  z-index: -2;
+  filter: blur(14px);
+  transition: inset 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+}
+
+.crypto-card-wrapper:hover::after {
+  inset: -16px;
+  filter: blur(22px);
+  opacity: 1;
+  background: linear-gradient(135deg,
+      rgba(6, 182, 212, 0.45),
+      rgba(59, 130, 246, 0.4),
+      rgba(139, 92, 246, 0.4),
+      rgba(236, 72, 153, 0.45),
+      rgba(139, 92, 246, 0.4),
+      rgba(59, 130, 246, 0.4),
+      rgba(6, 182, 212, 0.45));
+}
+
+/* Inner glow for crypto card on hover */
+.crypto-card-wrapper > div {
+  transition: box-shadow 0.4s ease;
+}
+
+.crypto-card-wrapper:hover > div {
+  box-shadow:
+    inset 0 0 40px rgba(139, 92, 246, 0.1),
+    inset 0 0 80px rgba(59, 130, 246, 0.06),
+    inset 0 -20px 60px rgba(236, 72, 153, 0.06);
+}
+
+.standard-card-wrapper {
+  position: relative;
+  border-radius: 26px;
+  padding: 2px;
+  overflow: visible;
+  isolation: isolate;
+  animation: standardPulseGlow 4s ease-in-out infinite;
+  transition: box-shadow 0.4s ease, filter 0.4s ease;
+}
+
+.standard-card-wrapper:hover {
+  animation: none;
+  box-shadow:
+    0 0 30px rgba(13, 255, 127, 0.35),
+    0 0 60px rgba(13, 255, 127, 0.2),
+    0 0 100px rgba(13, 255, 127, 0.1);
+}
+
+.standard-card-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 27px;
+  background: linear-gradient(135deg,
+      #0DFF7F 0%,
+      #0DFF7F 15%,
+      #FFFFFF 25%,
+      #0DFF7F 35%,
+      #0DFF7F 65%,
+      #FFFFFF 75%,
+      #0DFF7F 85%,
+      #0DFF7F 100%);
+  background-size: 300% 300%;
+  background-repeat: no-repeat;
+  animation: cryptoBorderFlow 5s ease-in-out infinite alternate;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+.standard-card-wrapper:hover::before {
+  opacity: 1;
+  background: linear-gradient(135deg,
+      #0DFF7F 0%,
+      #3DFFA0 15%,
+      #FFFFFF 25%,
+      #3DFFA0 35%,
+      #0DFF7F 50%,
+      #3DFFA0 65%,
+      #FFFFFF 75%,
+      #3DFFA0 85%,
+      #0DFF7F 100%);
+}
+
+.standard-card-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 32px;
+  background: linear-gradient(135deg,
+      rgba(13, 255, 127, 0.08) 0%,
+      rgba(13, 255, 127, 0.08) 15%,
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(13, 255, 127, 0.08) 35%,
+      rgba(13, 255, 127, 0.08) 65%,
+      rgba(255, 255, 255, 0.12) 75%,
+      rgba(13, 255, 127, 0.08) 85%,
+      rgba(13, 255, 127, 0.08) 100%);
+  background-size: 300% 300%;
+  background-repeat: no-repeat;
+  animation: cryptoBorderFlow 6s ease-in-out infinite alternate;
+  z-index: -2;
+  filter: blur(14px);
+  transition: inset 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+}
+
+.standard-card-wrapper:hover::after {
+  inset: -16px;
+  filter: blur(22px);
+  opacity: 1;
+  background: linear-gradient(135deg,
+      rgba(13, 255, 127, 0.25) 0%,
+      rgba(61, 255, 160, 0.3) 15%,
+      rgba(255, 255, 255, 0.2) 25%,
+      rgba(61, 255, 160, 0.3) 35%,
+      rgba(13, 255, 127, 0.25) 65%,
+      rgba(255, 255, 255, 0.2) 75%,
+      rgba(61, 255, 160, 0.3) 85%,
+      rgba(13, 255, 127, 0.25) 100%);
+}
+
+/* Inner glow for standard cards on hover */
+.standard-card-wrapper > div {
+  transition: box-shadow 0.4s ease;
+}
+
+.standard-card-wrapper:hover > div {
+  box-shadow:
+    inset 0 0 40px rgba(13, 255, 127, 0.08),
+    inset 0 0 80px rgba(13, 255, 127, 0.04),
+    inset 0 -20px 60px rgba(13, 255, 127, 0.06);
+}
+
+@keyframes standardPulseGlow {
+
+  0%,
+  100% {
+    box-shadow:
+      -10px 0 20px rgba(13, 255, 127, 0.01),
+      10px 0 20px rgba(255, 255, 255, 0.01);
+  }
+
+  50% {
+    box-shadow:
+      -20px 0 30px rgba(13, 255, 127, 0.02),
+      20px 0 30px rgba(255, 255, 255, 0.02);
+  }
+}
+
+/* ── Floating Particles ─────────────────────────────────────────────── */
+@keyframes cryptoFloat1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(40px, -60px) scale(1.5);
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0;
+  }
+}
+
+@keyframes gridPulse {
+  0% {
+    opacity: 0.1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes spotlightPan {
+  0% {
+    transform: translateX(-25%) scaleY(1);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: translateX(0%) scaleY(1.3);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(25%) scaleY(1);
+    opacity: 0.4;
+  }
+}
+
+@keyframes cryptoFloat2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate(-30px, -80px) scale(1.2);
+    opacity: 0.5;
+  }
+
+  90% {
+    opacity: 0;
+  }
+}
+
+@keyframes cryptoFloat3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(0.8);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translate(60px, -40px) scale(1.3);
+    opacity: 0.4;
+  }
+
+  85% {
+    opacity: 0;
+  }
+}
+
+@keyframes cryptoFloat4 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.7;
+  }
+
+  60% {
+    transform: translate(-50px, -50px) scale(1.4);
+    opacity: 0.3;
+  }
+
+  80% {
+    opacity: 0;
+  }
+}
+
+.crypto-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.crypto-particle--1 {
+  width: 6px;
+  height: 6px;
+  background: #3B82F6;
+  bottom: 20%;
+  left: 15%;
+  animation: cryptoFloat1 4s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
+}
+
+.crypto-particle--2 {
+  width: 4px;
+  height: 4px;
+  background: #8B5CF6;
+  bottom: 30%;
+  left: 40%;
+  animation: cryptoFloat2 5s ease-in-out 0.8s infinite;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
+}
+
+.crypto-particle--3 {
+  width: 5px;
+  height: 5px;
+  background: #EC4899;
+  bottom: 25%;
+  right: 25%;
+  animation: cryptoFloat3 4.5s ease-in-out 1.5s infinite;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.8);
+}
+
+.crypto-particle--4 {
+  width: 3px;
+  height: 3px;
+  background: #06B6D4;
+  bottom: 35%;
+  right: 40%;
+  animation: cryptoFloat4 5.5s ease-in-out 2s infinite;
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
+}
+
+.crypto-particle--5 {
+  width: 5px;
+  height: 5px;
+  background: #F59E0B;
+  bottom: 15%;
+  left: 60%;
+  animation: cryptoFloat1 6s ease-in-out 3s infinite;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+}
+
+.crypto-particle--6 {
+  width: 4px;
+  height: 4px;
+  background: #10B981;
+  bottom: 40%;
+  right: 15%;
+  animation: cryptoFloat2 4.8s ease-in-out 1s infinite;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+
+/* ── Pulsing Outer Glow ─────────────────────────────────────────────── */
+@keyframes cryptoPulseGlow {
+
+  0%,
+  100% {
+    box-shadow:
+      -20px 0 30px rgba(6, 182, 212, 0.06),
+      20px 0 30px rgba(236, 72, 153, 0.06);
+  }
+
+  50% {
+    box-shadow:
+      -30px 0 50px rgba(6, 182, 212, 0.12),
+      30px 0 50px rgba(236, 72, 153, 0.12);
+  }
+}
+
+.crypto-card-wrapper {
+  animation: cryptoPulseGlow 3s ease-in-out infinite;
+}
+
+.crypto-card-wrapper:hover {
+  animation: none;
+}
+
+@keyframes cryptoPriceGlow {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.35)) drop-shadow(0 0 20px rgba(139, 92, 246, 0.2)) brightness(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.5)) drop-shadow(0 0 30px rgba(139, 92, 246, 0.3)) brightness(1.1);
+  }
+}
+
+.crypto-price-glow {
+  animation: cryptoPriceGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes badgeShimmer {
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 100% center;
+  }
+}
+
+.crypto-badge-shimmer {
+  background: linear-gradient(90deg,
+      rgba(59, 130, 246, 0.12),
+      rgba(139, 92, 246, 0.18),
+      rgba(236, 72, 153, 0.15),
+      rgba(139, 92, 246, 0.18),
+      rgba(59, 130, 246, 0.12));
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: badgeShimmer 8s ease-in-out infinite alternate;
+}
+
+/* ── Button Breathing ───────────────────────────────────────────────── */
+@keyframes cryptoBtnBreathe {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(59, 130, 246, 0.3),
+      0 0 40px rgba(59, 130, 246, 0.1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 35px rgba(59, 130, 246, 0.5),
+      0 0 70px rgba(59, 130, 246, 0.2),
+      0 0 100px rgba(139, 92, 246, 0.1);
+  }
+}
+
+.crypto-btn-breathe {
+  animation: cryptoBtnBreathe 2s ease-in-out infinite;
+}
+
+.crypto-btn-breathe:hover {
+  animation: none;
+  box-shadow:
+    0 0 50px rgba(59, 130, 246, 0.6),
+    0 0 100px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ── Aurora Background Effect ───────────────────────────────────────── */
+@keyframes cryptoAurora {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -20px) rotate(120deg) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(360deg) scale(1);
+  }
+}
+
+.crypto-aurora-1 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+  filter: blur(60px);
+  animation: cryptoAurora 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.crypto-aurora-2 {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: cryptoAurora 10s ease-in-out 2s infinite reverse;
+  pointer-events: none;
+}
+
+.crypto-aurora-3 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: cryptoAurora 12s ease-in-out 4s infinite;
+  pointer-events: none;
+}
+
+/* ── Starburst badge rotation ───────────────────────────────────────── */
+@keyframes starburstPulse {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: scale(1.08) rotate(3deg);
+  }
+
+  50% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  75% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+}
+
+.crypto-starburst-animated {
+  animation: starburstPulse 3s ease-in-out infinite;
+}
+
+/* ── Crypto icon float ──────────────────────────────────────────────── */
+@keyframes cryptoIconFloat {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.crypto-icon-float {
+  animation: cryptoIconFloat 2s ease-in-out infinite;
+}
+
+/* ── Green Standard Card Wrapper ───────────────────────────────────── */
+
+.standard-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.standard-particle--1 {
+  width: 6px;
+  height: 6px;
+  background: #0DFF7F;
+  bottom: 20%;
+  left: 15%;
+  animation: cryptoFloat1 4s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(13, 255, 127, 0.8);
+}
+
+.standard-particle--2 {
+  width: 4px;
+  height: 4px;
+  background: #10B981;
+  bottom: 30%;
+  left: 40%;
+  animation: cryptoFloat2 5s ease-in-out 0.8s infinite;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+
+.standard-particle--3 {
+  width: 5px;
+  height: 5px;
+  background: #059669;
+  bottom: 25%;
+  right: 25%;
+  animation: cryptoFloat3 4.5s ease-in-out 1.5s infinite;
+  box-shadow: 0 0 10px rgba(5, 150, 105, 0.8);
+}
+
+.standard-particle--4 {
+  width: 3px;
+  height: 3px;
+  background: #34D399;
+  bottom: 35%;
+  right: 40%;
+  animation: cryptoFloat4 5.5s ease-in-out 2s infinite;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.8);
+}
+
+.standard-particle--5 {
+  width: 5px;
+  height: 5px;
+  background: #A7F3D0;
+  bottom: 15%;
+  left: 60%;
+  animation: cryptoFloat1 6s ease-in-out 3s infinite;
+  box-shadow: 0 0 10px rgba(167, 243, 208, 0.8);
+}
+
+.standard-particle--6 {
+  width: 4px;
+  height: 4px;
+  background: #0DFF7F;
+  bottom: 40%;
+  right: 15%;
+  animation: cryptoFloat2 4.8s ease-in-out 1s infinite;
+  box-shadow: 0 0 10px rgba(13, 255, 127, 0.8);
+}
+
+.standard-aurora-1 {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(13, 255, 127, 0.1) 0%, transparent 70%);
+  filter: blur(60px);
+  animation: cryptoAurora 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.standard-aurora-2 {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: cryptoAurora 10s ease-in-out 2s infinite reverse;
+  pointer-events: none;
+}
+
+.standard-aurora-3 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.08) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: cryptoAurora 12s ease-in-out 4s infinite;
+  pointer-events: none;
+}
+
+.standard-price-glow {
+  background: linear-gradient(135deg, #0DFF7F 0%, #FFFFFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(13, 255, 127, 0.15));
+}
