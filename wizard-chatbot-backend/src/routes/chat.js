@@ -64,8 +64,8 @@ Be clear and helpful when explaining the plans:
 
 | Plan                 | Price | Notes                               |
 |----------------------|-------|-------------------------------------|
-| 1 Month              | $49   | Great for trying out the tool       |
-| 1 Year               | $199  | Best value for long-term commitment |
+| 1 Month              | $99   | Great for trying out the tool       |
+| 1 Year               | $999  | Best value for long-term commitment |
 
 - All plans include Real-Time Market Bias, Automated Zone Mapping, Exclusive Community Access, Step-by-Step Video Guides, and Fast & Secure Crypto Payment.
 - We offer a 1 month plan and a 1 year plan.

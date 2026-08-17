@@ -943,3 +943,11 @@
   color: transparent;
   filter: drop-shadow(0 4px 12px rgba(13, 255, 127, 0.15));
 }
+
+/* ── Hide Contact Tab via Global Class (used in TradingChartScroll) ── */
+body.hide-contact-tab #contact-tab {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(100%, -50%);
+}

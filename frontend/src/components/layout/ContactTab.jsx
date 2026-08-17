@@ -1,0 +1,54 @@
+import React from 'react'
+import clsx from 'clsx'
+
+export default function ContactTab() {
+  return (
+    <a
+      id="contact-tab"
+      href="https://wa.me/918887515391"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={clsx(
+        "hidden md:flex",
+        "fixed right-0 top-1/2 -translate-y-1/2 z-[100]",
+        "group items-center justify-center",
+        "transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-x-2"
+      )}
+    >
+      <div className={clsx(
+        "bg-[#0DFF7F]/10 backdrop-blur-xl border border-[#0DFF7F]/30",
+        "py-6 px-3 md:py-8 md:px-4 rounded-l-2xl",
+        "shadow-[0_0_20px_rgba(13,255,127,0.15)] group-hover:shadow-[0_0_30px_rgba(13,255,127,0.4)]",
+        "group-hover:bg-[#0DFF7F]/20 group-hover:border-[#0DFF7F]/60",
+        "flex flex-col items-center gap-4",
+        "transition-all duration-300"
+      )}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-6 h-6 md:w-8 md:h-8 text-[#0DFF7F] animate-pulse"
+          style={{ filter: 'drop-shadow(0 0 10px rgba(13,255,127,0.6))' }}
+        >
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span
+          className="font-body font-black text-[18px] md:text-[22px] tracking-[0.2em] uppercase whitespace-nowrap text-[#0DFF7F]"
+          style={{ 
+            writingMode: 'vertical-rl', 
+            transform: 'rotate(180deg)',
+            textShadow: '0 0 12px rgba(13,255,127,0.6)'
+          }}
+        >
+          Contact Us
+        </span>
+      </div>
+    </a>
+  )
+}

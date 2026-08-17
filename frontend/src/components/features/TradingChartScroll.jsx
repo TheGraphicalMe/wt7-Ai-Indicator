@@ -379,6 +379,17 @@ export default function TradingChartScroll() {
       .to(text5Ref.current,    { opacity: 1, y: 0,     duration: 0.5 }, 3.0)
       .to(tlRef.current,       { opacity: 1,            duration: 0.5 }, 3.0)
 
+    // ── Toggle Contact Tab visibility ─────────────────────────────────
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top top',
+      end: `+=${SCROLL_DISTANCE}`,
+      onEnter: () => document.body.classList.add('hide-contact-tab'),
+      onLeave: () => document.body.classList.remove('hide-contact-tab'),
+      onEnterBack: () => document.body.classList.add('hide-contact-tab'),
+      onLeaveBack: () => document.body.classList.remove('hide-contact-tab'),
+    })
+
   }, { scope: containerRef, dependencies: [isMobile] })
 
   // ------------------------------------------------------------------

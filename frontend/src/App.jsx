@@ -10,6 +10,7 @@ import Features from '@/components/features/Features'
 import Pricing from '@/components/features/Pricing'
 import Footer from '@/components/layout/Footer'
 import Chatbot from '@/components/features/Chatbot'
+import ContactTab from '@/components/layout/ContactTab'
 import { FluidBg } from '@/components/ui/FluidBg'
 import TradingChartScroll from '@/components/features/TradingChartScroll'
 
@@ -51,6 +52,7 @@ export default function App() {
 
       {/* Floating elements — rendered outside main so they are always on top */}
       <Chatbot />
+      <ContactTab />
     </PrebookProvider>
   )
 }

@@ -79,7 +79,7 @@ const DiamondIcon = ({ color = '#0DFF7F' }) => (
 const cryptoPlans = [
   {
     name: '1 Month',
-    price: '$49',
+    price: '$99',
     features: [
       { text: 'Real-Time Market Bias', Icon: ChartIcon },
       { text: 'Automated Zone Mapping', Icon: BrainIcon },
@@ -91,7 +91,7 @@ const cryptoPlans = [
   },
   {
     name: '1 Year',
-    price: '$199',
+    price: '$999',
     features: [
       { text: 'Real-Time Market Bias', Icon: ChartIcon },
       { text: 'Automated Zone Mapping', Icon: BrainIcon },
@@ -197,7 +197,7 @@ const CardFace = ({ plan, theme, accentColor, onCryptoClick }) => {
 export default function Pricing() {
   const { open } = usePrebook()
   const [isCryptoModalOpen, setIsCryptoModalOpen] = useState(false)
-  const [cryptoModalData, setCryptoModalData] = useState({ amount: '$49', planName: '1 Month' })
+  const [cryptoModalData, setCryptoModalData] = useState({ amount: '$99', planName: '1 Month' })
 
   const handleCryptoClick = (plan) => {
     setCryptoModalData({ amount: plan.price, planName: plan.name })
@@ -229,9 +229,9 @@ export default function Pricing() {
             </p>
             <span className="hidden sm:block w-[1px] h-4 bg-[#8B5CF6]/30"></span>
             <div className="flex items-center gap-2 mt-1 sm:mt-0">
-              <span className="font-cond text-[0.75rem] sm:text-[1.05rem] font-extrabold tracking-[0.15em] uppercase text-[#A78BFA] drop-shadow-[0_0_12px_rgba(167,139,250,0.4)]">
+              {/* <span className="font-cond text-[0.75rem] sm:text-[1.05rem] font-extrabold tracking-[0.15em] uppercase text-[#A78BFA] drop-shadow-[0_0_12px_rgba(167,139,250,0.4)]">
                 COSTS JUST $0.5 PER DAY
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
