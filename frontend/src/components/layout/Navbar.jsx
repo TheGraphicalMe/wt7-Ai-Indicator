@@ -47,7 +47,7 @@ export default function Navbar() {
       <div className="flex justify-end w-[100px] sm:w-[130px]">
         <div className="relative flex flex-col items-center">
           <a
-            href="https://wa.me/918887515391"
+            href="https://wa.me/37498007366"
             target="_blank"
             rel="noopener noreferrer"
             className="glow-on-hover relative z-10 inline-flex items-center justify-center font-body font-bold tracking-wide transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] !w-auto !px-[14px] !py-[6px] !text-[0.65rem] max-sm:!min-w-0 max-sm:tracking-tight max-sm:!gap-1"

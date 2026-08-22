@@ -5,7 +5,7 @@ export default function ContactTab() {
   return (
     <a
       id="contact-tab"
-      href="https://wa.me/918887515391"
+      href="https://wa.me/37498007366"
       target="_blank"
       rel="noopener noreferrer"
       className={clsx(
