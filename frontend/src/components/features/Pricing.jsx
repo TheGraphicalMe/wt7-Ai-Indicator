@@ -1,8 +1,8 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { BlurReveal } from '@/components/ui/TextReveal'
-import { usePrebook } from '@/contexts/PrebookContext'
 import CryptoModal from '../layout/CryptoModal'
 import clsx from 'clsx'
+import useSaleCountdown, { padTime, SALE_END_LABEL } from '@/hooks/useSaleCountdown'
 
 /* ─────────────────────────────────────────────
    Shared Sub-components
@@ -79,7 +79,9 @@ const DiamondIcon = ({ color = '#0DFF7F' }) => (
 const cryptoPlans = [
   {
     name: '1 Month',
-    price: '$99',
+    originalPrice: '$99',
+    price: '$49',
+    discount: '50% OFF',
     features: [
       { text: 'Real-Time Market Bias', Icon: ChartIcon },
       { text: 'Automated Zone Mapping', Icon: BrainIcon },
@@ -91,7 +93,9 @@ const cryptoPlans = [
   },
   {
     name: '1 Year',
-    price: '$999',
+    originalPrice: '$999',
+    price: '$199',
+    discount: '80% OFF',
     features: [
       { text: 'Real-Time Market Bias', Icon: ChartIcon },
       { text: 'Automated Zone Mapping', Icon: BrainIcon },
@@ -107,14 +111,14 @@ const cryptoPlans = [
    Card Face — renders a single card's inner content
    ───────────────────────────────────────────── */
 
-const CardFace = ({ plan, theme, accentColor, onCryptoClick }) => {
+const CardFace = ({ plan, theme, accentColor, onCryptoClick, inView }) => {
   const isCrypto = theme === 'crypto'
 
   return (
     <div
       className={clsx(
         'group relative flex flex-col rounded-[24px] p-8 transition-colors duration-500 bg-[rgba(8,11,16,0.95)] border-none h-full',
-        isCrypto ? 'pt-10' : 'pt-14'
+        isCrypto ? 'pt-16' : 'pt-14'
       )}
       style={{
         backdropFilter: 'blur(30px)',
@@ -124,6 +128,7 @@ const CardFace = ({ plan, theme, accentColor, onCryptoClick }) => {
         overflow: 'hidden',
       }}
     >
+
       {/* Cinematic Spotlight */}
       <CardSpotlight theme={theme} />
 
@@ -146,12 +151,18 @@ const CardFace = ({ plan, theme, accentColor, onCryptoClick }) => {
 
         {/* Original price strikethrough */}
         {plan.originalPrice && (
-          <div className="text-muted line-through text-lg mt-2 -mb-2">{plan.originalPrice}</div>
+          <div className={clsx(
+            'text-[#9CA3AF] text-lg mt-2 -mb-2',
+            inView && 'festive-price-old'
+          )}>
+            {plan.originalPrice}
+          </div>
         )}
 
         <div className="flex items-end justify-center gap-1 mb-8 mt-4">
           <span className={clsx(
             'font-display text-5xl font-bold tracking-tight',
+            inView && 'festive-price-new',
             isCrypto
               ? 'bg-gradient-to-r from-[#3B82F6] via-[#6366F1] to-[#8B5CF6] bg-clip-text text-transparent crypto-price-glow'
               : 'text-green standard-price-glow'
@@ -195,9 +206,25 @@ const CardFace = ({ plan, theme, accentColor, onCryptoClick }) => {
    ───────────────────────────────────────────── */
 
 export default function Pricing() {
-  const { open } = usePrebook()
   const [isCryptoModalOpen, setIsCryptoModalOpen] = useState(false)
   const [cryptoModalData, setCryptoModalData] = useState({ amount: '$99', planName: '1 Month' })
+  const { days, hours, minutes, seconds, expired } = useSaleCountdown()
+  const [inView, setInView] = useState(false)
+  const pricingRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+    if (pricingRef.current) observer.observe(pricingRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   const handleCryptoClick = (plan) => {
     setCryptoModalData({ amount: plan.price, planName: plan.name })
@@ -205,12 +232,91 @@ export default function Pricing() {
   }
 
   return (
-    <section id="pricing" className="relative py-10 sm:py-[60px] px-4 pb-16 sm:pb-[100px] z-10">
+    <section ref={pricingRef} id="pricing" className="relative py-10 sm:py-[60px] px-4 pb-16 sm:pb-[100px] z-10">
       {/* Inline keyframes */}
       <style>{`
         @keyframes pricingCardIn {
           from { opacity: 0; transform: translateY(18px) scale(0.97); }
           to   { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+        @keyframes festiveOldPriceIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes strikeThrough {
+          0% { transform: scaleX(0); }
+          100% { transform: scaleX(1); }
+        }
+        @keyframes festiveNewPriceDrop {
+          0% { opacity: 0; transform: translateY(-20px) scale(0.8); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .festive-price-old {
+          position: relative;
+          display: inline-block;
+          text-decoration: none !important;
+          animation: festiveOldPriceIn 0.6s ease-out both;
+        }
+        .festive-price-old::after {
+          content: '';
+          position: absolute;
+          left: 42%;
+          right: 42%;
+          top: 50%;
+          height: 1px;
+          background-color: rgba(156, 163, 175, 0.9);
+          transform-origin: left;
+          animation: strikeThrough 0.8s ease-out 0.8s both;
+        }
+        .festive-price-new { 
+          animation: festiveNewPriceDrop 1.8s cubic-bezier(0.16, 1, 0.3, 1) 2.2s both; 
+        }
+      `}</style>
+
+      {/* Ribbon label CSS */}
+      <style>{`
+        .ribbon-label {
+          position: absolute;
+          top: 14px;
+          left: -10px;
+          z-index: 30;
+          display: flex;
+          align-items: center;
+          padding: 8px 20px 8px 22px;
+          background: linear-gradient(180deg, #EF4444 0%, #B91C1C 100%);
+          color: #fff;
+          font-family: 'Barlow Condensed', sans-serif;
+          font-weight: 800;
+          font-size: 0.7rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          box-shadow: 0 4px 16px rgba(185, 28, 28, 0.55);
+          border-radius: 2px 0 0 0;
+        }
+        /* Right arrow tip */
+        .ribbon-label::after {
+          content: '';
+          position: absolute;
+          right: -12px;
+          top: 0;
+          width: 0;
+          height: 0;
+          border-top: 16.5px solid transparent;
+          border-bottom: 16.5px solid transparent;
+          border-left: 12px solid #B91C1C;
+        }
+        /* Fold behind card — dark triangle below ribbon on left */
+        .ribbon-fold {
+          position: absolute;
+          top: 47px;
+          left: -10px;
+          width: 0;
+          height: 0;
+          border-top: 10px solid #7F1D1D;
+          border-left: 10px solid transparent;
+          z-index: 5;
         }
       `}</style>
 
@@ -229,11 +335,18 @@ export default function Pricing() {
             </p>
             <span className="hidden sm:block w-[1px] h-4 bg-[#8B5CF6]/30"></span>
             <div className="flex items-center gap-2 mt-1 sm:mt-0">
-              {/* <span className="font-cond text-[0.75rem] sm:text-[1.05rem] font-extrabold tracking-[0.15em] uppercase text-[#A78BFA] drop-shadow-[0_0_12px_rgba(167,139,250,0.4)]">
+              <span className="font-cond text-[0.75rem] sm:text-[1.05rem] font-extrabold tracking-[0.15em] uppercase text-[#A78BFA] drop-shadow-[0_0_12px_rgba(167,139,250,0.4)]">
                 COSTS JUST $0.5 PER DAY
-              </span> */}
+              </span>
             </div>
           </div>
+
+          {!expired && (
+            <div className="mt-4 flex items-center justify-center gap-2 font-cond text-xs font-bold tracking-[0.14em] text-[#FDE68A] uppercase">
+              <span className="h-2 w-2 rounded-full bg-[#FBBF24] animate-pulse" />
+              Offer till {SALE_END_LABEL}: {padTime(days)}d : {padTime(hours)}h : {padTime(minutes)}m : {padTime(seconds)}s
+            </div>
+          )}
         </div>
 
         {/* ── Cards Grid ── */}
@@ -242,14 +355,27 @@ export default function Pricing() {
             <div
               key={idx}
               className="relative w-full transition-all duration-500 hover:-translate-y-3"
-              style={{ animation: `pricingCardIn 0.45s ease-out ${idx * 0.09}s both` }}
+              style={{
+                animation: inView ? `pricingCardIn 0.45s ease-out ${idx * 0.09}s both` : 'none',
+                opacity: inView ? 1 : 0
+              }}
             >
+              {/* Ribbon Discount Label */}
+              {plan.discount && (
+                <>
+                  <div className="ribbon-label">
+                    Limited Offer — {plan.discount}
+                  </div>
+                  <div className="ribbon-fold" />
+                </>
+              )}
               <div className="crypto-card-wrapper h-full">
                 <CardFace
                   plan={plan}
                   theme="crypto"
                   accentColor="#8B5CF6"
                   onCryptoClick={handleCryptoClick}
+                  inView={inView}
                 />
               </div>
             </div>

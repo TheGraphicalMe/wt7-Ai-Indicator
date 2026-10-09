@@ -66,6 +66,11 @@ export const FEATURES = [
     title: 'Active P/L',
     desc: 'Track your live profit and loss directly on the chart 📈',
   },
+  {
+    icon: '📶',
+    title: 'Volume Profile',
+    desc: 'Visualize volume at each price level to spot key support & resistance zones 🏔️',
+  },
 ]
 
 // ─── GOOGLE FORM CONFIG ───────────────────────────────────────────────────────

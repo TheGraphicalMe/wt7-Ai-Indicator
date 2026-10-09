@@ -2,8 +2,9 @@
 import { PrebookProvider } from '@/contexts/PrebookContext'
 import AnimatedBackground from '@/components/ui/AnimatedBackground'
 import PrebookModal from '@/components/layout/PrebookModal'
-import CountdownPopup from '@/components/layout/CountdownPopup'
+import LimitedOfferModal from '@/components/layout/LimitedOfferModal'
 import Navbar from '@/components/layout/Navbar'
+import TopBanner from '@/components/layout/TopBanner'
 import Hero from '@/components/features/Hero'
 import SupportedMarkets from '@/components/features/SupportedMarkets'
 import Features from '@/components/features/Features'
@@ -29,6 +30,7 @@ export default function App() {
           </div>
           
           <div className="relative z-10 pointer-events-none">
+            <TopBanner />
             <Navbar />
             <div className="pt-[20px] sm:pt-[40px]">
               <Hero />
@@ -53,6 +55,7 @@ export default function App() {
       {/* Floating elements — rendered outside main so they are always on top */}
       <Chatbot />
       <ContactTab />
+      <LimitedOfferModal />
     </PrebookProvider>
   )
 }
